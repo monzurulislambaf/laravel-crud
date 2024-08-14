@@ -12,7 +12,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        $tasks = Task::all();
+
+        return view('tasks.index', compact('tasks'));
     }
 
     /**
@@ -20,7 +22,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        return view('tasks.create');
     }
 
     /**
@@ -28,7 +30,12 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+        ]);
+        Task::create($request->all());
+
+        return redirect()->route('tasks.index');
     }
 
     /**
@@ -44,16 +51,13 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        return view('tasks.edit', compact('task'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $task)
-    {
-        //
-    }
+    public function update(Request $request, Task $task) {}
 
     /**
      * Remove the specified resource from storage.
